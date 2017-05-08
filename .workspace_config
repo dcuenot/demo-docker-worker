@@ -1,0 +1,120 @@
+{
+  "defaultEnv": "wksp-icrd",
+  "environments": {
+    "wksp-icrd": {
+      "machines": {
+        "dev-machine": {
+          "attributes": {
+            "memoryLimitBytes": "2147483648"
+          },
+          "servers": {},
+          "agents": [
+            "org.eclipse.che.exec",
+            "org.eclipse.che.terminal",
+            "org.eclipse.che.ws-agent",
+            "org.eclipse.che.ssh"
+          ]
+        }
+      },
+      "recipe": {
+        "location": "eclipse/ubuntu_jdk8",
+        "type": "dockerimage"
+      }
+    }
+  },
+  "projects": [
+    {
+      "name": "demo-docker-worker",
+      "attributes": {},
+      "type": "blank",
+      "source": {
+        "location": "git@github.com:dcuenot/demo-docker-worker.git",
+        "type": "github",
+        "parameters": {}
+      },
+      "path": "/demo-docker-worker",
+      "problems": [],
+      "mixins": []
+    },
+    {
+      "name": "test",
+      "attributes": {
+        "commands": [
+          "{\"commandLine\":\"mvn -f /projects/test clean install \\ncp /projects/test/target/*.war $TOMCAT_HOME/webapps/ROOT.war\", \"name\":\"test: build\", \"attributes\":{\"previewUrl\":\"\", \"goal\":\"Build\"}, \"type\":\"mvn\"}",
+          "{\"commandLine\":\"$TOMCAT_HOME/bin/catalina.sh run 2>&1\", \"name\":\"test: run tomcat\", \"attributes\":{\"previewUrl\":\"http://${server.port.8080}\", \"goal\":\"Run\"}, \"type\":\"custom\"}",
+          "{\"commandLine\":\"$TOMCAT_HOME/bin/catalina.sh stop\", \"name\":\"test: stop tomcat\", \"attributes\":{\"previewUrl\":\"\", \"goal\":\"Run\"}, \"type\":\"custom\"}",
+          "{\"commandLine\":\"mvn -f /projects/test clean install \\ncp /projects/test/target/*.war $TOMCAT_HOME/webapps/ROOT.war \\n$TOMCAT_HOME/bin/catalina.sh run 2>&1\", \"name\":\"test: build and run\", \"attributes\":{\"previewUrl\":\"http://${server.port.8080}\", \"goal\":\"Run\"}, \"type\":\"mvn\"}",
+          "{\"commandLine\":\"mvn -f /projects/test clean install \\ncp /projects/test/target/*.war $TOMCAT_HOME/webapps/ROOT.war \\n$TOMCAT_HOME/bin/catalina.sh jpda run 2>&1\", \"name\":\"test: debug\", \"attributes\":{\"previewUrl\":\"http://${server.port.8080}\", \"goal\":\"Debug\"}, \"type\":\"mvn\"}"
+        ]
+      },
+      "type": "maven",
+      "source": {
+        "location": "https://github.com/che-samples/web-java-spring.git",
+        "type": "git",
+        "parameters": {
+          "branch": "master"
+        }
+      },
+      "path": "/test",
+      "problems": [],
+      "mixins": []
+    }
+  ],
+  "name": "java8",
+  "commands": [
+    {
+      "commandLine": "mvn clean install -f ${current.project.path}",
+      "name": "build",
+      "attributes": {
+        "goal": "Build",
+        "previewUrl": ""
+      },
+      "type": "mvn"
+    },
+    {
+      "commandLine": "mvn -f /projects/maven-xuyz clean install \ncp /projects/maven-xuyz/target/*.war $TOMCAT_HOME/webapps/ROOT.war",
+      "name": "maven-xuyz: build",
+      "attributes": {
+        "goal": "Build",
+        "previewUrl": ""
+      },
+      "type": "mvn"
+    },
+    {
+      "commandLine": "$TOMCAT_HOME/bin/catalina.sh run 2>&1",
+      "name": "maven-xuyz: run tomcat",
+      "attributes": {
+        "goal": "Run",
+        "previewUrl": "http://${server.port.8080}"
+      },
+      "type": "custom"
+    },
+    {
+      "commandLine": "$TOMCAT_HOME/bin/catalina.sh stop",
+      "name": "maven-xuyz: stop tomcat",
+      "attributes": {
+        "goal": "Run",
+        "previewUrl": ""
+      },
+      "type": "custom"
+    },
+    {
+      "commandLine": "mvn -f /projects/maven-xuyz clean install \ncp /projects/maven-xuyz/target/*.war $TOMCAT_HOME/webapps/ROOT.war \n$TOMCAT_HOME/bin/catalina.sh jpda run 2>&1",
+      "name": "maven-xuyz: debug",
+      "attributes": {
+        "goal": "Debug",
+        "previewUrl": "http://${server.port.8080}"
+      },
+      "type": "mvn"
+    },
+    {
+      "commandLine": "mvn -f /projects/maven-mgwz clean install \ncp /projects/maven-mgwz/target/*.war $TOMCAT_HOME/webapps/ROOT.war \n$TOMCAT_HOME/bin/catalina.sh run 2>&1",
+      "name": "maven-xuyz: build and run",
+      "attributes": {
+        "goal": "Run",
+        "previewUrl": "http://${server.port.8080}"
+      },
+      "type": "mvn"
+    }
+  ]
+}

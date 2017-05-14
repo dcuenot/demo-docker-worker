@@ -1,18 +1,17 @@
-# web-spring-java-simple
-A simple Spring app
+# Demo Docker Worker
+A simple Spring Application with the Database Couchbase
 
 # Developer Workspace
-
-[![Contribute](http://beta.codenvy.com/factory/resources/codenvy-contribute.svg)](http://beta.codenvy.com/f?id=hrh4c8gw8tlehd0i)
+[![Try a Factory ](https://codenvy.io/factory/resources/codenvy-contribute.svg)](https://codenvy.io/f?name=Java-couchbase&user=damiencuenot)
 
 # Stack to use
 
 FROM [codenvy/ubuntu_jdk8](https://hub.docker.com/r/codenvy/ubuntu_jdk8/)
 
-or
+and
 
+FROM [dcuenot/couchbase](https://hub.docker.com/r/dcuenot/couchbase/)
 
-FROM [codenvy/debian_jdk8](https://hub.docker.com/r/codenvy/debian_jdk8/)
 
 # How to run
 

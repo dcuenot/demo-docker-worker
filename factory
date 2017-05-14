@@ -1,0 +1,103 @@
+{
+  "v": "4.0",
+  "name": "Couchbase-java-dcu",
+  
+  "policies" : {
+    "create" : "perUser"
+  },
+  "workspace": {
+  "defaultEnv": "Java-Couchbase",
+  "environments": {
+    "Java-Couchbase": {
+      "machines": {
+        "db": {
+          "attributes": {
+            "memoryLimitBytes": "1073741824"
+          },
+          "servers": {},
+          "agents": [
+            "org.eclipse.che.exec",
+            "org.eclipse.che.terminal"
+          ]
+        },
+        "dev-machine": {
+          "attributes": {
+            "memoryLimitBytes": "2147483648"
+          },
+          "servers": {},
+          "agents": [
+            "org.eclipse.che.exec",
+            "org.eclipse.che.terminal",
+            "org.eclipse.che.ws-agent",
+            "org.eclipse.che.ssh"
+          ]
+        }
+      },
+      "recipe": {
+        "type": "compose",
+        "content": "services:\n  db:\n    image: dcuenot/couchbase\n    environment:\n      ADMIN_LOGIN: adminCB\n      ADMIN_PWD: passwordCB\n      BUCKET_NAME: CBWU_P01\n    mem_limit: 1073741824\n  dev-machine:\n    image: eclipse/ubuntu_jdk8\n    mem_limit: 2147483648\n    depends_on:\n      - db\n",
+        "contentType": "application/x-yaml"
+      }
+    }
+  },
+  "projects": [
+    {
+      "links": [],
+      "name": "demo-docker-worker",
+      "attributes": {},
+      "type": "blank",
+      "source": {
+        "location": "https://github.com/dcuenot/demo-docker-worker.git",
+        "type": "git",
+        "parameters": {
+          "branch": "master"
+        }
+      },
+      "path": "/demo-docker-worker",
+      "description": "Demo Docker Worker",
+      "problems": [],
+      "mixins": []
+    }
+  ],
+  "name": "Java-Couchbase",
+  "commands": [
+    {
+      "commandLine": "mvn clean install -f ${current.project.path}",
+      "name": "build",
+      "attributes": {
+        "goal": "Build",
+        "previewUrl": ""
+      },
+      "type": "mvn"
+    },
+    {
+      "commandLine": "mvn spring-boot:run",
+      "name": "mvn run",
+      "attributes": {
+        "goal": "Run",
+        "previewUrl": "http://localhost:${server.port.8080}"
+      },
+      "type": "mvn"
+    },
+	
+	
+    {
+      "commandLine": "couchbase-cli bucket-list -c 127.0.0.1:8091 -u $ADMIN_LOGIN -p $ADMIN_PWD     ",
+      "name": "Show databases",
+      "attributes": {
+        "goal": "Run",
+        "previewUrl": "http://localhost:${server.port.8091}"
+      },
+      "type": "custom"
+    }
+  ],
+  "links": []
+},
+  "id": "factoryxyaeehg5jdbz18ey",
+  "creator": {
+    "name": "Damien Cuenot",
+    "email": "damien.cuenot@accenture.com",
+    "created": 1494787899333,
+    "userId": "che"
+  }
+}

@@ -39,18 +39,18 @@
     "projects": [
       {
         "links": [],
-        "name": "Docker Worker",
+        "name": "typescript-greeter",
         "attributes": {},
         "type": "blank",
         "source": {
-          "location": "https://www.github.com/dcuenot/demo-docker-worker.git",
+          "location": "git@github.com:dcuenot/demo-docker-worker.git",
           "type": "git",
           "parameters": {
             "branch": "master"
           }
         },
-        "path": "/demo-docker-worker",
-        "description": "Docker Worker",
+        "path": "/typescript-greeter",
+        "description": "TypeScript greeter sample",
         "problems": [],
         "mixins": []
       }
@@ -71,7 +71,7 @@
         "name": "Show databases",
         "attributes": {
           "goal": "Run",
-          "previewUrl": "http://localhost:${server.port.8091}"
+          "previewUrl": "http://${server.port.8091}"
         },
         "type": "custom"
       }

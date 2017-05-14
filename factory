@@ -39,23 +39,23 @@
     "projects": [
       {
         "links": [],
-        "name": "demo-docker-worker",
+        "name": "Docker Worker",
         "attributes": {},
         "type": "blank",
         "source": {
-          "location": "git@github.com:dcuenot/demo-docker-worker.git",
+          "location": "https://www.github.com/dcuenot/demo-docker-worker.git",
           "type": "git",
           "parameters": {
             "branch": "master"
           }
         },
         "path": "/demo-docker-worker",
-        "description": "Demo Docker Worker",
+        "description": "Docker Worker",
         "problems": [],
         "mixins": []
       }
     ],
-    "name": "wksp-fex0",
+    "name": "wksp-fex0_1",
     "commands": [
       {
         "commandLine": "mvn clean install -f ${current.project.path}",
@@ -71,18 +71,11 @@
         "name": "Show databases",
         "attributes": {
           "goal": "Run",
-          "previewUrl": "http://${server.port.8091}"
+          "previewUrl": "http://localhost:${server.port.8091}"
         },
         "type": "custom"
       }
     ],
     "links": []
-  },
-  "id": "factory6funrlf8cz98y2sx",
-  "creator": {
-    "name": "che",
-    "email": "che@eclipse.org",
-    "created": 1494795806524,
-    "userId": "che"
   }
 }
